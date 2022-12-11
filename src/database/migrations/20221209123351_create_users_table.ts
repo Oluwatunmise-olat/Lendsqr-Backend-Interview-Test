@@ -5,7 +5,7 @@ const tableName = 'users';
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable(tableName, (table) => {
     table.collate('utf8mb4_general_ci');
-    table.uuid('uuid').unique().notNullable();
+    table.uuid('uuid').unique().notNullable().primary();
     table.string('first_name').notNullable();
     table.string('last_name').notNullable();
     table.string('email').notNullable();

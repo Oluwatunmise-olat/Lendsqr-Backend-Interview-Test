@@ -1,14 +1,11 @@
-import { Env } from '../utils';
-import type { Knex } from 'knex';
-
-module.exports = {
+const config = {
   client: 'mysql2',
   connection: {
-    host: Env.MYSQL_HOST,
-    port: Env.MYSQL_PORT,
-    user: Env.MYSQL_USER,
-    password: Env.MYSQL_PASSWORD,
-    database: Env.MYSQL_DATABASE_NAME,
+    host: process.env.MYSQL_HOST,
+    port: process.env.MYSQL_PORT,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE_NAME,
     charset: 'utf8mb4',
     typeCast: (field: any, next: any) => {
       if (field.type === 'TINY' && field.length === 1) {
@@ -28,4 +25,6 @@ module.exports = {
     directory: './migrations',
     extension: 'ts',
   },
-} as Knex.Config;
+};
+
+module.exports = config;

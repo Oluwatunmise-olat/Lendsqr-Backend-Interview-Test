@@ -1,5 +1,5 @@
 import { knex } from 'knex';
 
-import * as db_credentials from './knexfile';
+const db_credentials = require('./knexfile');
 
 export default knex(db_credentials);

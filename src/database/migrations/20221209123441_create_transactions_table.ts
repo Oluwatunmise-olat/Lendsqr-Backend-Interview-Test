@@ -7,7 +7,7 @@ const tableName = 'transactions';
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable(tableName, (table) => {
     table.collate('utf8mb4_general_ci');
-    table.uuid('uuid').unique().notNullable();
+    table.uuid('uuid').unique().notNullable().primary();
     table
       .string('user_id')
       .references('uuid')
