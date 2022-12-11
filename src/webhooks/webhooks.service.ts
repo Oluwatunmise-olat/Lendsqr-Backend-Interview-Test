@@ -81,7 +81,7 @@ export default class WebhookService {
         .select([
           'users.*',
           KnexDataSource.raw(
-            `JSON_OBJECT("uuid", wallets.uuid, "balance", wallets.balance) AS wallet`,
+            `JSON_OBJECT('balance', wallets.balance, 'uuid', wallets.uuid) AS wallet`,
           ),
         ])) as IUserDTO;
 
@@ -113,18 +113,6 @@ export default class WebhookService {
     }
 
     if (transaction.status === TransactionStatus.PENDING) {
-      const user = (await KnexDataSource('users')
-        .whereNull('users.deleted_at')
-        .where('users.uuid', transaction.user_id)
-        .first()
-        .innerJoin('wallets', 'wallets.user_id', 'users.uuid')
-        .select([
-          'users.*',
-          KnexDataSource.raw(
-            `JSON_OBJECT("uuid", wallets.uuid, "balance", wallets.balance) AS wallet`,
-          ),
-        ])) as IUserDTO;
-
       await KnexDataSource.transaction(async (trx) => {
         await trx('transactions')
           .whereNull('deleted_at')

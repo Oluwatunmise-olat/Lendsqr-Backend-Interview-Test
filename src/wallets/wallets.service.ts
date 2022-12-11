@@ -203,7 +203,7 @@ export default class WalletService {
       .select([
         'users.*',
         KnexDataSource.raw(
-          `JSON_OBJECT("uuid", wallets.uuid, "balance", wallets.balance) AS wallet`,
+          `JSON_OBJECT('balance', wallets.balance, 'uuid', wallets.uuid) AS wallet`,
         ),
       ])) as IUserDTO;
 
@@ -258,6 +258,7 @@ export default class WalletService {
 
   static async getWalletBalance(email: string): Promise<ServiceResponse> {
     const KOBO = 100;
+
     const user = (await KnexDataSource('users')
       .whereNull('users.deleted_at')
       .where('users.email', email)
@@ -266,7 +267,7 @@ export default class WalletService {
       .select([
         'users.*',
         KnexDataSource.raw(
-          `JSON_OBJECT("uuid", wallets.uuid, "balance", wallets.balance) AS wallet`,
+          `JSON_OBJECT('balance', wallets.balance, 'uuid', wallets.uuid) AS wallet`,
         ),
       ])) as IUserDTO;
 

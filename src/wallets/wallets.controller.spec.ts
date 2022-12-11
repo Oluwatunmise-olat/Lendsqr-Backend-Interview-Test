@@ -150,6 +150,7 @@ describe('Wallets', () => {
         faker.name.prefix() +
         Math.floor(Math.random() * 8999 + 1000).toString() +
         '@balance.com';
+
       const user_id = generateUUID();
       await KnexDataSource('users').insert({
         first_name: faker.name.firstName(),

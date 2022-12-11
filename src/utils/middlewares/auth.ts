@@ -47,7 +47,7 @@ export class AuthMiddleware {
         .select([
           'users.*',
           KnexDataSource.raw(
-            `JSON_OBJECT("uuid", wallets.uuid, "balance", wallets.balance) AS wallet`,
+            `JSON_OBJECT('balance', wallets.balance, 'uuid', wallets.uuid) AS wallet`,
           ),
         ]);
 
