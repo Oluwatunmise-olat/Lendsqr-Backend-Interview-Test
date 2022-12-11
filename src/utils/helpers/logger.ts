@@ -1,5 +1,6 @@
 import { createLogger, transports, format } from 'winston';
 
+// Note: In production log to an external service not console
 export const logger = createLogger({
   transports: [new transports.Console()],
   format: format.combine(

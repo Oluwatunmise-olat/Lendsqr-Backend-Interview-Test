@@ -111,7 +111,7 @@ export default class WalletService {
     }
   }
 
-  // TODO: verify bank codes and account number and cache bank code
+  // TODO: endpoint to fetch supported banks and cached in redis
   static async debitWalletTransaction(
     user: IUserDTO,
     payload: { amount: number; account_number: string; bank_code: string },
@@ -132,7 +132,10 @@ export default class WalletService {
     if (!status)
       return {
         status: 'bad-request',
-        message: 'Could not withdraw at the moment',
+        message:
+          data && data.is_axios_error
+            ? `${message}. Please provide valid bank_code and associated account number`
+            : 'Could not withdraw at the moment',
       };
 
     const transaction_ref = generateReferenceCode();

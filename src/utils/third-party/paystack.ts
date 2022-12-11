@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, isAxiosError } from 'axios';
 import * as crypto from 'crypto';
 
 import { Env } from '../config';
@@ -105,6 +105,14 @@ export class PayStack {
         message: null,
       };
     } catch (error) {
+      if (isAxiosError(error)) {
+        return {
+          status: false,
+          data: { is_axios_error: true },
+          message: error.response.data.message,
+        };
+      }
+
       logger.error('An error occurred generating transfer recipient');
       return {
         status: false,
