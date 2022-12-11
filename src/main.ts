@@ -13,13 +13,12 @@ app.use(helmet());
 app.use(apiRoutes);
 
 app.use(
-  '*',
   (
     request: express.Request,
     response: express.Response,
     next: express.NextFunction,
   ) => {
-    return 'ok';
+    return { status: true, message: 'Lendsqr backend interview test' };
   },
 );
 

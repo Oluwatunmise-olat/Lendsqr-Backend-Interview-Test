@@ -111,6 +111,7 @@ export default class WalletService {
     }
   }
 
+  // TODO: verify bank codes and account number and cache bank code
   static async debitWalletTransaction(
     user: IUserDTO,
     payload: { amount: number; account_number: string; bank_code: string },
@@ -206,6 +207,12 @@ export default class WalletService {
     if (!recipientExists)
       return { status: 'not-found', message: 'Recipient account not found' };
 
+    if (recipientExists.email === user.email)
+      return {
+        status: 'bad-request',
+        message: 'Cannot perform transfer to self',
+      };
+
     // wallet balance has to be greater than amount to be transferred because of payment gateway transaction fee in cases where cards are used instead of wallet
     const hasSufficientFunds = Number(user.wallet.balance) > AMOUNT_IN_KOBO;
 
@@ -246,7 +253,6 @@ export default class WalletService {
     }
   }
 
-  // Add auth
   static async getWalletBalance(email: string): Promise<ServiceResponse> {
     const KOBO = 100;
     const user = (await KnexDataSource('users')
