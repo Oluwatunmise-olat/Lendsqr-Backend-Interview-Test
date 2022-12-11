@@ -29,6 +29,7 @@ Provided you have `docker` and `docker compose` installed on your machine, you c
 - Install project dependencies `yarn install`
 - Run migrations (Database should have been setup) `yarn run migrate`
 - Start application `yarn run start:dev`
+- Note: To receive Paystack webhooks you have to register a `webhook url`. For this, i recommend using `ngrok` as a reverse proxy.
 
 ## Steps To Run Test
 
